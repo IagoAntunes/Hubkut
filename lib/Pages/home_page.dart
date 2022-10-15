@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:github/Pages/profile_page.dart';
+import 'package:github/Services/general.dart';
+
+import '../Models/profile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void getApi(BuildContext context) async {
+    Profile profile = await General.getProfile('IagoAntunes');
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: ((context) => ProfilePage(
+              profile: profile,
+            )),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +187,7 @@ class HomePage extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => getApi(context),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff2E7BB4),
                           ),
@@ -184,6 +198,23 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                decoration: const BoxDecoration(color: Color(0xffBBCDE8)),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(children: const [
+                    Text(
+                      '2022 HubKut',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    Text('-Developed by Iago Ferreira')
+                  ]),
+                ),
+              )
             ],
           ),
         ),
