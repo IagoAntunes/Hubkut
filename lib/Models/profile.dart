@@ -1,3 +1,5 @@
+import 'package:github/Models/followers.dart';
+import 'package:github/Models/following.dart';
 import 'package:github/Models/starred.dart';
 import 'package:github/Services/general.dart';
 
@@ -36,6 +38,8 @@ class Profile {
   String updated_at;
 
   List<Starred> listStarred = [];
+  List<Followers> listFollowers = [];
+  List<Following> listFollowing = [];
 
   Profile({
     required this.location,
