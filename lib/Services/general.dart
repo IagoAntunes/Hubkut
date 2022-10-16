@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:github/Models/followers.dart';
 import 'package:github/Models/following.dart';
 import 'package:github/Models/profile.dart';
+import 'package:github/Models/repository.dart';
 import 'package:github/Models/starred.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,6 +31,8 @@ class General {
             profile.following_url.indexOf('{'),
           ),
         );
+        Map<String, dynamic> listRepos = await getRepos(url);
+        profile.listRepository.add(Repository.fromMap(listRepos));
         for (var data in listFollowers) {
           profile.listFollowers.add(Followers.fromMap(data));
         }
@@ -85,6 +88,21 @@ class General {
     try {
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body);
+        return data;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static getRepos(String url) async {
+    Repository repository;
+    final response = await http.get(
+      Uri.parse(url),
+    );
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
         return data;
       }
     } catch (e) {

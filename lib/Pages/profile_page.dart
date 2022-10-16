@@ -31,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                       Text(
                         'Bem-vindo(a), ${profile.name}',
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700),
+                            fontSize: 25, fontWeight: FontWeight.w700),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -124,7 +124,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,9 +137,8 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Container(
                         decoration: const BoxDecoration(
-                            color: Color(0xff6F92BB),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                          color: Color(0xff6F92BB),
+                        ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff6F92BB)),
@@ -165,47 +164,93 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          'Meus últimos repositórios:',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                          itemCount: profile.public_repos,
+                          itemBuilder: ((context, index) {
+                            return Text('oi');
+                          }),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Seguindo',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              '(${profile.listFollowing.length})',
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Seguindo',
                               style: TextStyle(
-                                color: Colors.blue.shade700,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  fontSize: 22, fontWeight: FontWeight.bold),
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                '(${profile.listFollowing.length})',
+                                style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 300,
                         child: GridView.builder(
-                            itemCount: profile.listFollowing.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3),
-                            itemBuilder: ((context, index) {
-                              return Container(
+                          itemCount: profile.listFollowing.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
                                 child: SizedBox(
-                                  height: 80,
-                                  width: 80,
+                                  height: 60,
+                                  width: 60,
                                   child: Stack(
                                     children: [
-                                      Image.network(profile
-                                          .listFollowing[index].avatar_url),
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        child: Image.network(profile
+                                            .listFollowing[index].avatar_url),
+                                      ),
                                       Positioned(
-                                          bottom: 1,
+                                        bottom: 1,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             profile.listFollowing[index].login
                                                         .length >
@@ -218,13 +263,107 @@ class ProfilePage extends StatelessWidget {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold),
-                                          )),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              );
-                            })),
-                      )
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Seguidores',
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                '(${profile.listFollowers.length})',
+                                style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 300,
+                        child: GridView.builder(
+                          itemCount: profile.listFollowers.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: SizedBox(
+                                  height: 60,
+                                  width: 60,
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        child: Image.network(profile
+                                            .listFollowers[index].avatar_url),
+                                      ),
+                                      Positioned(
+                                        bottom: 1,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            profile.listFollowers[index].login
+                                                        .length >
+                                                    10
+                                                ? profile
+                                                    .listFollowers[index].login
+                                                    .substring(0, 10)
+                                                : profile
+                                                    .listFollowers[index].login,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
                     ],
                   ),
                 ),
