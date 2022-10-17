@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="500">
+    <img src="https://github.com/IagoAntunes/Hubkut/blob/master/assets/gitkut.png" alt="Logo" width="500">
 </p>
 
 <h4 align="center"> 
@@ -38,7 +38,7 @@ O layout da aplicação está disponível no Figma:
 https://www.figma.com/community/file/1105860543512658494
 
 <a>
-  <img src="https://github.com/IagoAntunes/weather/blob/master/assets/Cover.png" alt="Logo" width="500">
+
 </a>
 
 ## 🛠 Tecnologias
