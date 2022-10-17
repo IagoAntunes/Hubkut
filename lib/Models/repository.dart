@@ -22,8 +22,8 @@ class Repository {
       id: map['id'],
       node_id: map['node_id'],
       name: map['name'],
-      full_name: map['full_name'],
-      description: map['description'],
+      full_name: map['full_name'] ?? '',
+      description: map['description'] ?? '',
       private: map['private'],
     );
 

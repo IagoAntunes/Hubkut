@@ -5,11 +5,33 @@ import '../Models/profile.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key, required this.profile});
   Profile profile;
+  List<String> listMenu = [
+    'Criar Repositorio',
+    'Importar Repositorio',
+    'Perfil'
+  ];
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color(0xffD9E6F6),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: Text(
+              'Hubkut',
+              style: TextStyle(
+                  color: Colors.pink,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28),
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -24,12 +46,12 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Bem-vindo(a), ${profile.name}',
+                        'Bem-vindo(a), ${profile.name.substring(0, profile.name.indexOf(' '))}',
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.w700),
                       ),
@@ -115,7 +137,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              space(),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -135,27 +157,39 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(fontSize: 22),
                         ),
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color(0xff6F92BB),
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff6F92BB)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Criar Repositorio'),
-                          ),
-                          onPressed: () {},
+                      SizedBox(
+                        width: size.width * 0.8,
+                        height: 40,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: listMenu.length,
+                          separatorBuilder: ((context, index) => SizedBox(
+                                width: 15,
+                              )),
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: const BoxDecoration(
+                                  color: Color(0xff6F92BB),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xff6F92BB)),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 0),
+                                  child: Text(listMenu[index]),
+                                ),
+                                onPressed: () {},
+                              ),
+                            );
+                          }),
                         ),
                       )
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              const space(),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -166,9 +200,9 @@ class ProfilePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(25),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(bottom: 15),
                         child: Text(
                           'Meus últimos repositórios:',
@@ -176,11 +210,96 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 100,
-                        child: ListView.builder(
-                          itemCount: profile.public_repos,
+                        height: size.height * 0.4,
+                        child: ListView.separated(
+                          separatorBuilder: ((context, index) => const SizedBox(
+                                height: 5,
+                              )),
+                          itemCount: profile.listRepository.length,
                           itemBuilder: ((context, index) {
-                            return Text('oi');
+                            return Container(
+                              height: size.height * 0.15,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffD9E6F6),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.book,
+                                              color: Colors.grey,
+                                            ),
+                                            Text(
+                                              profile.listRepository[index]
+                                                  .full_name,
+                                              style: const TextStyle(
+                                                color: Color(0xff2E7BB4),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            profile.listRepository[index]
+                                                .description!,
+                                            style: TextStyle(
+                                                color: Colors.grey.shade600),
+                                            softWrap: false,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xff6F92BB),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 3),
+                                            child: Row(
+                                              children: const [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow,
+                                                  size: 15,
+                                                ),
+                                                Text(
+                                                  'Star',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
                           }),
                         ),
                       )
@@ -188,9 +307,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              const space(),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -206,7 +323,7 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 20),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Seguindo',
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold),
@@ -226,7 +343,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 300,
+                        height: size.height * 0.3,
                         child: GridView.builder(
                           itemCount: profile.listFollowing.length,
                           gridDelegate:
@@ -260,7 +377,7 @@ class ProfilePage extends StatelessWidget {
                                                     .substring(0, 10)
                                                 : profile
                                                     .listFollowing[index].login,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -278,9 +395,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              const space(),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -296,7 +411,7 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 20),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Seguidores',
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold),
@@ -316,7 +431,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 300,
+                        height: size.height * 0.3,
                         child: GridView.builder(
                           itemCount: profile.listFollowers.length,
                           gridDelegate:
@@ -350,7 +465,7 @@ class ProfilePage extends StatelessWidget {
                                                     .substring(0, 10)
                                                 : profile
                                                     .listFollowers[index].login,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -373,5 +488,16 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class space extends StatelessWidget {
+  const space({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(height: 20);
   }
 }

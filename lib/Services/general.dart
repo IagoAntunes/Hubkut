@@ -31,8 +31,10 @@ class General {
             profile.following_url.indexOf('{'),
           ),
         );
-        Map<String, dynamic> listRepos = await getRepos(url);
-        profile.listRepository.add(Repository.fromMap(listRepos));
+        List<dynamic> listRepos = await getRepos(profile.repos_url);
+        for (var data in listRepos) {
+          profile.listRepository.add(Repository.fromMap(data));
+        }
         for (var data in listFollowers) {
           profile.listFollowers.add(Followers.fromMap(data));
         }
@@ -51,7 +53,6 @@ class General {
   void teste() {}
 
   static getStarred(String url) async {
-    Starred starred;
     final response = await http.get(
       Uri.parse(url),
     );
@@ -60,13 +61,10 @@ class General {
         List<dynamic> data = jsonDecode(response.body);
         return data;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   static getFollowers(String url) async {
-    Starred starred;
     final response = await http.get(
       Uri.parse(url),
     );
@@ -75,13 +73,10 @@ class General {
         List<dynamic> data = jsonDecode(response.body);
         return data;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   static getFollowing(String url) async {
-    Starred starred;
     final response = await http.get(
       Uri.parse(url),
     );
@@ -90,23 +85,18 @@ class General {
         List<dynamic> data = jsonDecode(response.body);
         return data;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   static getRepos(String url) async {
-    Repository repository;
     final response = await http.get(
       Uri.parse(url),
     );
     try {
       if (response.statusCode == 200) {
-        Map<String, dynamic> data = jsonDecode(response.body);
+        List<dynamic> data = jsonDecode(response.body);
         return data;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 }
